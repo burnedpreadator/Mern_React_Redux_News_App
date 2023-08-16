@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 
 /* READ */
+
 export const getUser = async (req, res) => {
   try {
     const { id } = req.params;
@@ -20,17 +21,19 @@ export const getUserFriends = async (req, res) => {
       user.friends.map((id) => User.findById(id))
     );
     const formattedFriends = friends.map(
-      ({ _id, firstName, lastName, occupation, location, picturePath }) => {
+      ({ _id, firstName, lastName, occupation, location, picture }) => {
         return { _id, firstName, lastName, occupation, location, picturePath };
       }
     );
+
     res.status(200).json(formattedFriends);
-  } catch (err) {
+  } catch {
     res.status(404).json({ message: err.message });
   }
 };
 
-/* UPDATE */
+// UPDATE
+
 export const addRemoveFriend = async (req, res) => {
   try {
     const { id, friendId } = req.params;
@@ -51,11 +54,10 @@ export const addRemoveFriend = async (req, res) => {
       user.friends.map((id) => User.findById(id))
     );
     const formattedFriends = friends.map(
-      ({ _id, firstName, lastName, occupation, location, picturePath }) => {
+      ({ _id, firstName, lastName, occupation, location, picture }) => {
         return { _id, firstName, lastName, occupation, location, picturePath };
       }
     );
-
     res.status(200).json(formattedFriends);
   } catch (err) {
     res.status(404).json({ message: err.message });
